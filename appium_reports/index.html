@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+		<title>Summary Report</title>
+	
+			<link rel="shortcut icon" href="resources/images/favicon_auto.ico">
+			
+		<script type="text/javascript" src='resources/jquery-2.1.0.min.js'></script>
+		<!--[if lt IE 9]>
+			<script type="text/javascript" src='resources/jquery-1.11.1.min.js'></script>
+		<![endif]-->
+		<script type="text/javascript" src='resources/js/chart.min.js'></script>
+		<script type='text/javascript' src='resources/summary.js'></script>
+		<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
+
+		<style type="text/css">
+
+		* {
+			font-family: 'Segoe UI',Tahoma,Helvetica,Sans-Serif;
+		}
+
+		#filterField{
+			float: right;
+			border-radius: 5px;
+			padding: 6px;
+			border: 1px solid #BDBDBD;
+		}
+
+		.navbar h3{
+			float: left;
+		}
+
+		.navbar .logo{
+			float: right;
+			background-image: url(resources/images/logo.png);
+			width: 100px;
+			height: 30px;
+			background-repeat: no-repeat;
+			background-size: contain;
+			margin: 15px auto;
+		}
+
+		.navbar .logomf{
+			float: right;
+			background-image: url(resources/images/mf_logo.jpg);
+			width: 100px;
+			height: 30px;
+			background-repeat: no-repeat;
+			background-size: contain;
+			margin: 15px auto;
+		}
+
+		td .glyphicon{
+			padding-right: 5px;
+		}
+
+
+		.highlighted {
+			background-color: rgba(255, 230, 0, 0.5);
+			margin: 0px;
+			border-radius: 3px;
+		}
+
+		#noresultrow{
+			height: 50px;
+			display: table-row;
+		}
+
+		#main-report{
+			width: 100%;
+			height: 100%; 
+			display: none;
+			position: fixed;
+		}
+
+		#report-iframe{
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+
+		/* iFrame overlay buttons */
+		.floating{
+			position: fixed;
+			z-index: 1;
+			background-color: #f3f3f3;
+			text-align: center;
+			padding: 15px 0px;
+			cursor: pointer;
+			width: 140px;
+			white-space: nowrap;
+			font-size: 11px;
+			font-weight: bold;
+			right: -100px;
+			transition: right 0.2s;
+		}
+		
+		.floating span {
+  			float: left;
+			width: 40px;
+			text-align: center;
+		}
+
+		.floating:hover{
+			right: 0px;
+		}
+
+		#returntomenu {
+			bottom: 114px;
+		}
+
+		#nextbutton{
+			bottom: 62px;
+		}
+
+		#backbutton{
+			bottom: 10px;
+		}
+
+		#search-container{
+			width: 100%;
+			height: 50px;
+			margin: 0;
+			padding: 0;
+		}
+
+		.panel .table{
+			margin: 0;
+		}
+
+		.table tbody tr{
+			cursor: pointer;
+		}
+
+		.table tbody tr:hover{
+			background-color: #f3f3f3;
+		}
+
+		#bar-chart-container{
+			width: 50%;
+			float: left;
+		}
+
+		#pie-chart-container{
+			width: 50%;
+			float: right;
+		}
+
+		#noscript{
+			position: fixed;
+			z-index: 10;
+			top: 10px;
+			right: 30px;
+		}
+
+		</style>
+
+	</head>
+	<body>
+		
+		<noscript>
+			<div id='noscript'>
+					Javascript was not detected. Please enable Javascript in this page to access the data in this report.
+			</div>
+		</noscript>
+
+		<div id='main-report'>
+			<div id='returntomenu' class='floating'>
+				<span class='glyphicon glyphicon-menu-hamburger'></span>
+				<span>Main Menu</span>
+			</div>
+			<div id='nextbutton' class='floating'>
+				<span class='glyphicon glyphicon-chevron-right'></span>
+				<span>Next Report</span>
+			</div>
+			<div id='backbutton' class='floating'>
+				<span class='glyphicon glyphicon-chevron-left'></span>
+				<span>Previous Report</span>
+			</div>
+			<iframe id="report-iframe" src="" frameborder="0" seamless='true'></iframe>
+		</div>
+
+		<div id='main-menu'>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<h3>Summary Report</h3>
+									<a href='http://www.experitest.com' class='logo' target='_BLANK'></a>
+								</div>
+			</nav>
+			
+			<div class='container-fluid'>
+				
+				<div class='panel panel-default'>
+					<div class='panel-body'>
+						<div id='bar-chart-container'>
+							<h4 class="text-center">Test Result By Time Period</h4>
+							<canvas id="barChart"></canvas>
+						</div>
+						<div id='pie-chart-container'>
+							<h4 class="text-center">Total Test Result</h4>
+							<canvas id="pieChart"></canvas>
+						</div>
+					</div>
+				</div>
+
+				<script type="text/javascript">
+
+				$(document).ready(function(){
+
+					var barData = {
+						labels: [ "Last 24 Hours", "Last Week", "Last Month", "Last 3 Month", "Last Year" ],
+						datasets: [
+							{
+								label: "Passed",
+								fillColor: "#5BBF46",
+								strokeColor: "transparent",
+								highlightFill: "#6BD255",
+								highlightStroke: "transparent",
+								data: [	
+										16,
+										16,
+										16,
+										36,
+										36
+									]
+							},
+							{
+								label: "Skipped",
+								fillColor: "#CCCC00",
+								strokeColor: "transparent",
+								highlightFill: "#DCDC10",
+								highlightStroke: "transparent",
+								data: [
+										0,
+										0,
+										0,
+										0,
+										0
+									]
+							},
+							{
+								label: "Failed",
+								fillColor: "#F7464A",
+								strokeColor: "transparent",
+								highlightFill: "#FF5A5E",
+								highlightStroke: "transparent",
+								data: [	
+										9,
+										9,
+										9,
+										22,
+										22
+									]
+							}
+						]
+					};
+
+					var barOptions = {
+						responsive: true,
+						maintainAspectRatio: true,
+						animation: false
+					};
+
+					var barCtx = document.getElementById("barChart").getContext("2d");;
+					
+					var myBarChart = new Chart(barCtx).Bar(barData, barOptions);
+					//var barChartLegend = myBarChart.generateLegend();
+					//$('#bar-chart-container').html(barChartLegend);
+
+					var pieData = [
+						{
+							value: 22,
+							color:"#F7464A",
+							highlight: "#FF5A5E",
+							label: "Failed"
+						},
+						{
+							value: 0,
+							color:"#CCCC00",
+							highlight: "#DCDC10",
+							label: "Skipped"
+						},
+						{
+							value: 36,
+							color: "#5BBF46",
+							highlight: "#6BD255",
+							label: "Passed"
+						}
+					];
+
+					var pieOptions = {
+						responsive: true,
+						maintainAspectRatio: true,
+						animation: false
+					};
+
+					var pieCtx = document.getElementById("pieChart").getContext("2d");;
+					
+					var myPieChart = new Chart(pieCtx).Pie(pieData, pieOptions);
+					//var pieChartLegend = myPieChart.generateLegend();
+					//$('#pie-chart-container').html(pieChartLegend);
+
+					// Enable bootstrap tooltip
+                    $('[data-toggle="tooltip"]').tooltip()
+				});
+
+				</script>
+				
+				<p>
+					<a href='C:\Users\Owner\appiumstudio-reports\transactions_summary.csv'>transactions_summary.csv</a>
+					<br /><br />
+				</p>
+
+				<div class='panel panel-default'>
+					<div class='panel-heading'>Test Reports</div>
+					<div class='panel-body'>
+						
+						<div id='search-container'>
+							<input id="filterField" type="text" placeholder="Search" autofocus/>
+						</div>
+						
+						<table class='table'>
+							<thead>
+								<th class='text-center'>#</th>
+								<th>Name</th>
+								<th>Status</th>
+								<th>Run Started</th>
+								<th>Duration</th>
+								<th>Failed Step</th>
+								<th>Error Message</th>
+							</thead>
+														<tbody>
+																	<tr>
+										<td style='text-align: center;'><span>1<span></td>
+										<td><span href='test58' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 23:59:20</span></td>
+										<td><span>82.897 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>2<span></td>
+										<td><span href='test57' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 23:52:10</span></td>
+										<td><span>79.786 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>3<span></td>
+										<td><span href='test56' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 23:15:24</span></td>
+										<td><span>87.161 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>4<span></td>
+										<td><span href='test55' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 23:05:26</span></td>
+										<td><span>31.114 Seconds</span></td>
+										<td><span>28:Find Element [xpath,//*[@text='Calculator']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>5<span></td>
+										<td><span href='test54' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 23:03:02</span></td>
+										<td><span>81.592 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>6<span></td>
+										<td><span href='test53' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 23:00:08</span></td>
+										<td><span>56.925 Seconds</span></td>
+										<td><span>61:Find Element [xpath,//*[@text='Stock Calculator']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>7<span></td>
+										<td><span href='test52' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 22:58:51</span></td>
+										<td><span>31.147 Seconds</span></td>
+										<td><span>28:Find Element [xpath,//*[@text='Calculator']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>8<span></td>
+										<td><span href='test51' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 22:49:12</span></td>
+										<td><span>80.268 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>9<span></td>
+										<td><span href='test50' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 22:37:47</span></td>
+										<td><span>84.239 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>10<span></td>
+										<td><span href='test49' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:53:29</span></td>
+										<td><span>88.495 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>11<span></td>
+										<td><span href='test48' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:50:14</span></td>
+										<td><span>82.269 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>12<span></td>
+										<td><span href='test47' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:40:36</span></td>
+										<td><span>91.24 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>13<span></td>
+										<td><span href='test46' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:36:47</span></td>
+										<td><span>52.683 Seconds</span></td>
+										<td><span>46:Find Element [xpath,//*[@text='Currency Converter']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>14<span></td>
+										<td><span href='test45' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:35:56</span></td>
+										<td><span>24.211 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>15<span></td>
+										<td><span href='test44' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:33:59</span></td>
+										<td><span>51.918 Seconds</span></td>
+										<td><span>31:Find Element [xpath,//*[@text='Calculator']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>16<span></td>
+										<td><span href='test43' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:22:18</span></td>
+										<td><span>50.451 Seconds</span></td>
+										<td><span>46:Find Element [xpath,//*[@text='Currency Converter']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>17<span></td>
+										<td><span href='test42' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:21:14</span></td>
+										<td><span>22.767 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>18<span></td>
+										<td><span href='test41' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:19:59</span></td>
+										<td><span>49.96 Seconds</span></td>
+										<td><span>46:Find Element [xpath,//*[@text='Currency Converter']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>19<span></td>
+										<td><span href='test40' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:16:15</span></td>
+										<td><span>51.311 Seconds</span></td>
+										<td><span>46:Find Element [xpath,//*[@text='Currency Converter']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>20<span></td>
+										<td><span href='test39' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:15:25</span></td>
+										<td><span>19.143 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>21<span></td>
+										<td><span href='test38' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:14:15</span></td>
+										<td><span>47.827 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>22<span></td>
+										<td><span href='test37' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:13:34</span></td>
+										<td><span>26.514 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>23<span></td>
+										<td><span href='test36' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:12:38</span></td>
+										<td><span>31.829 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>24<span></td>
+										<td><span href='test35' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:11:57</span></td>
+										<td><span>23.661 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>25<span></td>
+										<td><span href='test34' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Thu, 28 Apr 2022 21:10:45</span></td>
+										<td><span>28.606 Seconds</span></td>
+										<td><span>15:Find Element [xpath,//*[@id='loanAmount']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>26<span></td>
+										<td><span href='test33' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Mon, 28 Mar 2022 11:50:29</span></td>
+										<td><span>32.305 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>27<span></td>
+										<td><span href='test32' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Mon, 28 Mar 2022 10:48:19</span></td>
+										<td><span>30.373 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>28<span></td>
+										<td><span href='test31' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Mon, 28 Mar 2022 10:46:25</span></td>
+										<td><span>30.685 Seconds</span></td>
+										<td><span>29:Start Activity [com.financial.calculator,.FinancialCalculators]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>29<span></td>
+										<td><span href='test30' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 21:58:19</span></td>
+										<td><span>26.825 Seconds</span></td>
+										<td><span>29:Start Activity [com.financial.calculator,.FinancialCalculators]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>30<span></td>
+										<td><span href='test29' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 21:55:32</span></td>
+										<td><span>29.932 Seconds</span></td>
+										<td><span>29:Start Activity [com.financial.calculator,.FinancialCalculators]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>31<span></td>
+										<td><span href='test28' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 21:48:32</span></td>
+										<td><span>29.696 Seconds</span></td>
+										<td><span>29:Start Activity [com.financial.calculator,.FinancialCalculators]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>32<span></td>
+										<td><span href='test27' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 21:46:29</span></td>
+										<td><span>29.758 Seconds</span></td>
+										<td><span>30:Start Activity [com.financial.calculator,.FinancialCalculators]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>33<span></td>
+										<td><span href='test26' file='index.html'>test</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 20:04:35</span></td>
+										<td><span>44.741 Seconds</span></td>
+										<td><span>46:Find Element [xpath,//*[@text='Currency Converter']]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>34<span></td>
+										<td><span href='test25' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 20:03:20</span></td>
+										<td><span>28.215 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>35<span></td>
+										<td><span href='test24' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 19:54:34</span></td>
+										<td><span>27.904 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>36<span></td>
+										<td><span href='test23' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 19:50:11</span></td>
+										<td><span>29.981 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>37<span></td>
+										<td><span href='test22' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 18:26:21</span></td>
+										<td><span>24.034 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>38<span></td>
+										<td><span href='test21' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 18:23:16</span></td>
+										<td><span>24.071 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>39<span></td>
+										<td><span href='test20' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 18:20:24</span></td>
+										<td><span>27.285 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>40<span></td>
+										<td><span href='test19' file='index.html'>test</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 27 Mar 2022 18:15:25</span></td>
+										<td><span>21.696 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>41<span></td>
+										<td><span href='test18' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Mon, 21 Mar 2022 14:41:45</span></td>
+										<td><span>13.278 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>42<span></td>
+										<td><span href='test17' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Mon, 21 Mar 2022 14:40:33</span></td>
+										<td><span>12.285 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>43<span></td>
+										<td><span href='test16' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Mon, 21 Mar 2022 14:34:38</span></td>
+										<td><span>16.451 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>44<span></td>
+										<td><span href='test15' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Mon, 21 Mar 2022 13:40:47</span></td>
+										<td><span>11.664 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>45<span></td>
+										<td><span href='test14' file='index.html'>report.html</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Mon, 21 Mar 2022 13:31:56</span></td>
+										<td><span>15.518 Seconds</span></td>
+										<td><span>12:Find Element [xpath,xpath=//*[@id='icon' and (./preceding-sibling::* | ./following-sibling::*)[@text='Loan Calculator']]]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>46<span></td>
+										<td><span href='test13' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Mon, 21 Mar 2022 12:42:21</span></td>
+										<td><span>22.142 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>47<span></td>
+										<td><span href='test12' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 20 Mar 2022 12:15:52</span></td>
+										<td><span>22.78 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>48<span></td>
+										<td><span href='test11' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Sun, 20 Mar 2022 12:13:20</span></td>
+										<td><span>20.525 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>49<span></td>
+										<td><span href='test9' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 15:16:57</span></td>
+										<td><span>24.747 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>50<span></td>
+										<td><span href='test8' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:55:56</span></td>
+										<td><span>17.486 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>51<span></td>
+										<td><span href='test7' file='index.html'>report.html</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:43:31</span></td>
+										<td><span>15.605 Seconds</span></td>
+										<td><span>20:Start Activity [com.example.android.apis,.ApiDemos]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>52<span></td>
+										<td><span href='test6' file='index.html'>report.html</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:39:01</span></td>
+										<td><span>16.638 Seconds</span></td>
+										<td><span>20:Start Activity [com.example.android.apis,ApiDemos]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>53<span></td>
+										<td><span href='test5' file='index.html'>report.html</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:38:10</span></td>
+										<td><span>16.256 Seconds</span></td>
+										<td><span>20:Start Activity [com.example.android.apis,.ApiDemos]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>54<span></td>
+										<td><span href='test4' file='index.html'>report.html</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:35:14</span></td>
+										<td><span>15.65 Seconds</span></td>
+										<td><span>20:Start Activity [com.example.android.apis,.ApiDemos]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>55<span></td>
+										<td><span href='test3' file='index.html'>report.html</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:33:22</span></td>
+										<td><span>15.744 Seconds</span></td>
+										<td><span>20:Start Activity [com.example.android.apis,.ApiDemos]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>56<span></td>
+										<td><span href='test2' file='index.html'>report.html</span></td>
+																				<td class='text-danger'>
+											<span class='glyphicon glyphicon-remove'></span>
+											<span>Failed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:31:48</span></td>
+										<td><span>15.343 Seconds</span></td>
+										<td><span>20:Start Activity [com.example.android.apis/.ApiDemos,.ApiDemos]</span></td>
+										<td><span data-toggle="tooltip" title="Unknown error message">Unknown error message</span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>57<span></td>
+										<td><span href='test1' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:29:56</span></td>
+										<td><span>15.506 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																										<tr>
+										<td style='text-align: center;'><span>58<span></td>
+										<td><span href='test0' file='index.html'>report.html</span></td>
+																				<td class='text-success'>
+											<span class='glyphicon glyphicon-ok'></span>
+											<span>Passed</span>
+										</td>
+																				<td><span>Fri, 18 Mar 2022 14:25:49</span></td>
+										<td><span>16.888 Seconds</span></td>
+										<td><span></span></td>
+										<td><span data-toggle="tooltip" title=""></span></td>
+									</tr>
+																									
+								<tr id="noresultrow" style="display: none;">
+									<td colspan="5">
+										<center>No test results were found for the search <b id="noresultrow-searchtext"></b></center>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

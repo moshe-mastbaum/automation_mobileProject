@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<test_report>
+<info>
+<test_info>
+<test_status>OK</test_status>
+<time_zone>Israel Standard Time</time_zone>
+<run_started>Thu, 28 Apr 2022 21:50:14</run_started>
+<total_time>00:01:22.269</total_time>
+<project/>
+<user>Owner</user>
+<machine_name>CND0395V7P</machine_name>
+</test_info>
+<device_info>
+<device_name>M2006C3MG</device_name>
+<manufacture>Xiaomi</manufacture>
+<model>M2006C3MG</model>
+<os>Android</os>
+<serial_number>SK75CYXGYPYLNJFM</serial_number>
+<version>10</version>
+<versionMajor>10.x</versionMajor>
+<screen_size>720x1600</screen_size>
+</device_info>
+</info>
+<reports>
+<report>
+<line>Start steps group 'New Session [android]'</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>0.PNG</imageFile>
+<text>{appPackage=com.financial.calculator, device.majorVersion=10, dontGoHomeOnQuit=false, device.os=Android, noReset=false, dontStopAppOnReset=false, applicationClearData=false, reservationDuration=240, reportFormat=xml, fullReset=false, deviceUDID=SK75CYXGYPYLNJFM, install.only.for.update=false, desired={appPackage=com.financial.calculator, appActivity=.FinancialCalculators, reportDirectory=c:/appiumproject/appium_reports, reportFormat=xml, udid=SK75CYXGYPYLNJFM, platformName=android, testName=test}, device.serialNumber=SK75CYXGYPYLNJFM, locationServicesAuthorized=false, device.version=10, reportDirectory=c:/appiumproject/appium_reports, autoWebview=false, udid=SK75CYXGYPYLNJFM, platformName=android, testName=test, device.screenSize=720x1600, useKeystore=false, test.type=Mobile, commandTimeouts=120000, device.manufacture=Xiaomi, instrumentApp=false, appiumVersion=1.8.0, autoDismissAlerts=false, reportUrl=c:\appiumproject\appium_reports\test48, newSessionWaitTimeout=600, keystorePath=~/.android/debug.keystore, appActivity=.FinancialCalculators, installOnlyForUpdate=false, waitForDeviceTimeout=120000, device.model=M2006C3MG, device.name=M2006C3MG, autoGrantPermissions=false, appBuildVersion=, appReleaseVersion=, takeScreenshots=true, projectName=, autoAcceptAlerts=false}</text>
+<line>Init Actual Capabilities</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>1.PNG</imageFile>
+<text>NATIVE_APP</text>
+<line>Init Context [NATIVE_APP]</line>
+<status>true</status>
+</report>
+<report>
+<text>PHONE</text>
+<line>Get device property: device.category</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>2.PNG</imageFile>
+<line>Get context list</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>3.PNG</imageFile>
+<line>Set property android.native.nonInstrumented to: true</line>
+<status>true</status>
+</report>
+<report>
+<text>Writing device log to C:\Users\Owner\AppData\Local\Temp\AppiumStudio\deviceLogs_16511718153925887110145492807526.log</text>
+<line>Start writing device log for M2006C3MG</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>4.PNG</imageFile>
+<line>Launch native activity / URL com.financial.calculator/.FinancialCalculators</line>
+<status>true</status>
+</report>
+<report>
+<line>Device Action: wake</line>
+<status>true</status>
+</report>
+<report>
+<line>Stop steps group</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>5.PNG</imageFile>
+<line>Set Timeout Implicit [2000.0]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>6.PNG</imageFile>
+<text>{width=720, height=1600}</text>
+<line>Get Window Size [current]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>7.PNG</imageFile>
+<text>{ELEMENT=184}</text>
+<line>Find Element [xpath,//*[@text='Loan Calculator']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>8.PNG</imageFile>
+<line>Click [(//*[@text='Loan Calculator'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>9.PNG</imageFile>
+<text>{ELEMENT=185}</text>
+<line>Find Element [xpath,//*[@id='loanAmount']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>10.PNG</imageFile>
+<line>Clear [(//*[@id='loanAmount'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>11.PNG</imageFile>
+<line>Send Keys [(//*[@id='loanAmount'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>12.PNG</imageFile>
+<text>{ELEMENT=186}</text>
+<line>Find Element [xpath,//*[@id='interestRate']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>13.PNG</imageFile>
+<line>Clear [(//*[@id='interestRate'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>14.PNG</imageFile>
+<line>Send Keys [(//*[@id='interestRate'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>15.PNG</imageFile>
+<text>{ELEMENT=187}</text>
+<line>Find Element [xpath,//*[@id='loanYear']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>16.PNG</imageFile>
+<line>Clear [(//*[@id='loanYear'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>17.PNG</imageFile>
+<line>Send Keys [(//*[@id='loanYear'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>18.PNG</imageFile>
+<text>{ELEMENT=188}</text>
+<line>Find Element [xpath,//*[@text='CALCULATE']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>19.PNG</imageFile>
+<line>Click [(//*[@text='CALCULATE'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>20.PNG</imageFile>
+<text>{ELEMENT=189}</text>
+<line>Find Element [xpath,//*[@id='monthlyPayment']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>21.PNG</imageFile>
+<text>808.59</text>
+<line>Get Text [(//*[@id='monthlyPayment'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>22.PNG</imageFile>
+<text>{ELEMENT=190}</text>
+<line>Find Element [xpath,//*[@contentDescription='נווט למעלה']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>23.PNG</imageFile>
+<line>Click [(//*[@contentDescription='נווט למעלה'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>24.PNG</imageFile>
+<text>{ELEMENT=191}</text>
+<line>Find Element [xpath,//*[@text='Calculator']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>25.PNG</imageFile>
+<line>Click [(//*[@text='Calculator'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>26.PNG</imageFile>
+<line>Perform Touch Action [[{action=press, options={x=700.0, y=800.0}}, {action=wait, options={ms=1865.0}}, {action=moveTo, options={x=65.0, y=800.0}}, {action=release, options={}}]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>27.PNG</imageFile>
+<text>{ELEMENT=192}</text>
+<line>Find Element [xpath,//*[@text='9']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>28.PNG</imageFile>
+<line>Click [(//*[@text='9'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>29.PNG</imageFile>
+<text>{ELEMENT=193}</text>
+<line>Find Element [xpath,//*[@text='2']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>30.PNG</imageFile>
+<line>Click [(//*[@text='2'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>31.PNG</imageFile>
+<line>Perform Touch Action [[{action=press, options={x=65.0, y=800.0}}, {action=wait, options={ms=1865.0}}, {action=moveTo, options={x=700.0, y=800.0}}, {action=release, options={}}]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>32.PNG</imageFile>
+<text>{ELEMENT=194}</text>
+<line>Find Element [xpath,//*[@text='&amp;divide;']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>33.PNG</imageFile>
+<line>Click [(//*[@text='&amp;divide;'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>34.PNG</imageFile>
+<text>{ELEMENT=195}</text>
+<line>Find Element [xpath,//*[@text='3']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>35.PNG</imageFile>
+<line>Click [(//*[@text='3'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>36.PNG</imageFile>
+<text>{ELEMENT=196}</text>
+<line>Find Element [xpath,//*[@text='=']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>37.PNG</imageFile>
+<line>Click [(//*[@text='='])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>38.PNG</imageFile>
+<text>{ELEMENT=197}</text>
+<line>Find Element [xpath,//*[@id='formula']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>39.PNG</imageFile>
+<text>0.5</text>
+<line>Get Text [(//*[@id='formula'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>40.PNG</imageFile>
+<line>Press Key Code [4.0]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>41.PNG</imageFile>
+<text>{ELEMENT=198}</text>
+<line>Find Element [xpath,//*[@text='Currency Converter']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>42.PNG</imageFile>
+<line>Click [(//*[@text='Currency Converter'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>43.PNG</imageFile>
+<text>{ELEMENT=199}</text>
+<line>Find Element [xpath,//*[@id='fromCurrencySpinner']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>44.PNG</imageFile>
+<line>Click [(//*[@id='fromCurrencySpinner'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>45.PNG</imageFile>
+<text>{ELEMENT=200}</text>
+<line>Find Element [xpath,//*[@text='Israeli Shekel:ILS']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>46.PNG</imageFile>
+<line>Click [(//*[@text='Israeli Shekel:ILS'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>47.PNG</imageFile>
+<text>{ELEMENT=201}</text>
+<line>Find Element [xpath,//*[@id='exchRateInput']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>48.PNG</imageFile>
+<line>Clear [(//*[@id='exchRateInput'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>49.PNG</imageFile>
+<line>Send Keys [(//*[@id='exchRateInput'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>50.PNG</imageFile>
+<text>{ELEMENT=202}</text>
+<line>Find Element [xpath,//*[@id='amountInput']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>51.PNG</imageFile>
+<line>Clear [(//*[@id='amountInput'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>52.PNG</imageFile>
+<line>Send Keys [(//*[@id='amountInput'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>53.PNG</imageFile>
+<text>{ELEMENT=203}</text>
+<line>Find Element [xpath,//*[@id='converterResult']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>54.PNG</imageFile>
+<text>240 ILS = 67.2 EUR</text>
+<line>Get Text [(//*[@id='converterResult'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>55.PNG</imageFile>
+<text>{ELEMENT=204}</text>
+<line>Find Element [xpath,//*[@contentDescription='נווט למעלה']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>56.PNG</imageFile>
+<line>Click [(//*[@contentDescription='נווט למעלה'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>57.PNG</imageFile>
+<text>{ELEMENT=205}</text>
+<line>Find Element [xpath,//*[@text='Stock Calculator']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>58.PNG</imageFile>
+<line>Click [(//*[@text='Stock Calculator'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>59.PNG</imageFile>
+<text>{ELEMENT=206}</text>
+<line>Find Element [xpath,//*[@text='Stock Return and Capital Gain Tax']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>60.PNG</imageFile>
+<line>Click [(//*[@text='Stock Return and Capital Gain Tax'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>61.PNG</imageFile>
+<text>{ELEMENT=207}</text>
+<line>Find Element [xpath,//*[@id='purchasePrice']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>62.PNG</imageFile>
+<line>Clear [(//*[@id='purchasePrice'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>63.PNG</imageFile>
+<line>Send Keys [(//*[@id='purchasePrice'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>64.PNG</imageFile>
+<text>{ELEMENT=208}</text>
+<line>Find Element [xpath,//*[@id='soldPrice']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>65.PNG</imageFile>
+<line>Clear [(//*[@id='soldPrice'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>66.PNG</imageFile>
+<line>Send Keys [(//*[@id='soldPrice'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>67.PNG</imageFile>
+<text>{ELEMENT=209}</text>
+<line>Find Element [xpath,//*[@id='purchaseFee']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>68.PNG</imageFile>
+<line>Clear [(//*[@id='purchaseFee'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>69.PNG</imageFile>
+<line>Send Keys [(//*[@id='purchaseFee'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>70.PNG</imageFile>
+<text>{ELEMENT=210}</text>
+<line>Find Element [xpath,//*[@id='soldFee']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>71.PNG</imageFile>
+<line>Clear [(//*[@id='soldFee'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>72.PNG</imageFile>
+<line>Send Keys [(//*[@id='soldFee'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>73.PNG</imageFile>
+<text>{ELEMENT=211}</text>
+<line>Find Element [xpath,//*[@text='Purchased']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>74.PNG</imageFile>
+<line>Click [(//*[@text='Purchased'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>75.PNG</imageFile>
+<text>{ELEMENT=212}</text>
+<line>Find Element [xpath,//*[@text='1']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>76.PNG</imageFile>
+<line>Click [(//*[@text='1'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>77.PNG</imageFile>
+<text>{ELEMENT=213}</text>
+<line>Find Element [xpath,//*[@text='אישור']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>78.PNG</imageFile>
+<line>Click [(//*[@text='אישור'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>79.PNG</imageFile>
+<text>{ELEMENT=214}</text>
+<line>Find Element [xpath,//*[@id='soldDate']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>80.PNG</imageFile>
+<line>Click [(//*[@id='soldDate'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>81.PNG</imageFile>
+<text>{ELEMENT=215}</text>
+<line>Find Element [xpath,//*[@text='אישור']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>82.PNG</imageFile>
+<line>Click [(//*[@text='אישור'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>83.PNG</imageFile>
+<text>{ELEMENT=216}</text>
+<line>Find Element [xpath,//*[@id='sharesOwned']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>84.PNG</imageFile>
+<line>Clear [(//*[@id='sharesOwned'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>85.PNG</imageFile>
+<line>Send Keys [(//*[@id='sharesOwned'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>86.PNG</imageFile>
+<text>{ELEMENT=217}</text>
+<line>Find Element [xpath,//*[@text='CALCULATE']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>87.PNG</imageFile>
+<line>Click [(//*[@text='CALCULATE'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>88.PNG</imageFile>
+<text>{ELEMENT=218}</text>
+<line>Find Element [xpath,//*[@id='gainLoss']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>89.PNG</imageFile>
+<text>17.00</text>
+<line>Get Text [(//*[@id='gainLoss'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>90.PNG</imageFile>
+<text>{ELEMENT=219}</text>
+<line>Find Element [xpath,//*[@contentDescription='נווט למעלה']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>91.PNG</imageFile>
+<line>Click [(//*[@contentDescription='נווט למעלה'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>92.PNG</imageFile>
+<text>{ELEMENT=220}</text>
+<line>Find Element [xpath,//*[@contentDescription='נווט למעלה']]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>93.PNG</imageFile>
+<line>Click [(//*[@contentDescription='נווט למעלה'])[1]]</line>
+<status>true</status>
+</report>
+<report>
+<imageFile>94.PNG</imageFile>
+<line>Quit</line>
+<status>true</status>
+</report>
+</reports>
+</test_report>
